@@ -24,6 +24,7 @@
 import { getLocation, getCharacter } from 'rickmortyapi'
 import InfiniteLoading from 'vue-infinite-loading'
 import debounce from 'debounce'
+import { dbLocal } from '@/services/IndexedDB'
 import LocationLoaders from './LocationLoaders'
 import LocationSearch from './LocationSearch'
 import LocationsList from './LocationsList'
@@ -70,12 +71,22 @@ export default {
         const characterIds = location.residents.map((resident) =>
           resident.split('/').slice(-1)
         )
-        const characters = await getCharacter(characterIds)
+        const keyCache = `${characterIds.join(',')}`
+        const cached = await dbLocal.getCharacters(keyCache)
+        const characters = cached || (await getCharacter(characterIds))
 
         if (Array.isArray(characters)) {
-          this.characters = characters.filter(character => character.status !== 'unknown')
+          this.characters = characters.filter(
+            (character) => character.status !== 'unknown'
+          )
         } else {
-          this.characters = [characters].filter(character => character.status !== 'unknown')
+          this.characters = [characters].filter(
+            (character) => character.status !== 'unknown'
+          )
+        }
+
+        if (!cached) {
+          await dbLocal.setCharacters(keyCache, this.characters)
         }
       }
       this.characterLoading = false
@@ -86,10 +97,19 @@ export default {
         const query = new URLSearchParams(this.paginator.next.split('?')[1])
         page = Number(query.get('page'))
       }
-      const response = await getLocation({
-        page,
-        name: this.search
-      })
+      const keyCache = `page=${page}&name=${this.search}`
+      const cached = await dbLocal.getLocations(keyCache)
+
+      const response =
+        cached ||
+        (await getLocation({
+          page,
+          name: this.search
+        }))
+
+      if (!cached) {
+        await dbLocal.setLocations(keyCache, response)
+      }
 
       if (response.error) {
         $state.complete()

@@ -36,6 +36,7 @@
 <script>
 import { getCharacter, getEpisode } from 'rickmortyapi'
 import { FacebookLoader } from 'vue-content-loader'
+import { dbLocal } from '@/services/IndexedDB'
 import EpisodesList from './EpisodesList'
 
 export default {
@@ -69,17 +70,29 @@ export default {
   methods: {
     async fetchCharacter (id) {
       this.loading = true
-      const character = await getCharacter(id)
+      console.log({ id })
+      const keyCacheCharacter = `${id.join(',')}`
+      const cachedCharacter = await dbLocal.getCharacters(keyCacheCharacter)
+      const character = cachedCharacter || (await getCharacter(id))
+      if (!cachedCharacter) {
+        await dbLocal.setCharacters(keyCacheCharacter, character)
+      }
+
       if (character.episode.length > 0) {
         const episodeIds = character.episode.map((episode) =>
           episode.split('/').slice(-1)
         )
 
-        const episodes = await getEpisode(episodeIds)
+        const keyCacheEpisodes = `${episodeIds.join(',')}`
+        const cachedEpisodes = await dbLocal.getEpisodes(keyCacheEpisodes)
+        const episodes = cachedEpisodes || (await getEpisode(episodeIds))
         if (Array.isArray(episodes)) {
           this.episodes = episodes
         } else {
           this.episodes = [episodes]
+        }
+        if (!cachedEpisodes) {
+          await dbLocal.setEpisodes(keyCacheEpisodes, this.episodes)
         }
       }
       this.character = character
