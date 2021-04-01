@@ -4,11 +4,12 @@
     <div v-else>
       <b-row>
         <b-col md="4">
-          <b-img
+          <b-img-lazy
             :src="character.image"
             fluid-grow
             alt="Responsive image"
-          ></b-img>
+            blank-src="/img/placeholder.jpg"
+          ></b-img-lazy>
         </b-col>
         <b-col>
           <b-card>

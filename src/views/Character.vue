@@ -12,6 +12,9 @@ import CharacterProfile from '@/components/character/CharacterProfile.vue'
 
 export default {
   name: 'Character',
+  metaInfo: {
+    title: 'Character profile'
+  },
   components: {
     CharacterProfile
   }
