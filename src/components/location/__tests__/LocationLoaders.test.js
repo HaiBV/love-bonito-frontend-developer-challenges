@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import LocationLoaders from '@/components/location/LocationLoaders.vue'
 import { FacebookLoader } from 'vue-content-loader'
-
+jest.mock('idb')
 describe('LocationLoaders.vue', () => {
   it('renders LocationLoaders', () => {
     const wrapper = shallowMount(LocationLoaders, {

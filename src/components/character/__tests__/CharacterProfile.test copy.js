@@ -4,6 +4,8 @@ import initSetup from '@/initSetup'
 import CharacterProfile from '@/components/character/CharacterProfile.vue'
 import { FacebookLoader } from 'vue-content-loader'
 
+jest.mock('idb')
+
 const $route = {
   path: '/characters/40'
 }

@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import LocationsList from '@/components/location/LocationsList.vue'
 import SingleLocation from '@/components/location/SingleLocation.vue'
-
+jest.mock('idb')
 describe('LocationsList.vue', () => {
   it('renders LocationsList', () => {
     const wrapper = shallowMount(LocationsList, {

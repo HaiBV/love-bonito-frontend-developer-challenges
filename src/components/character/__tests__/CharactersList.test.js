@@ -3,6 +3,8 @@ import initSetup from '@/initSetup'
 import CharactersList from '@/components/character/CharactersList.vue'
 import SingleCharacter from '@/components/character/SingleCharacter.vue'
 
+jest.mock('idb')
+
 describe('CharactersList.vue', () => {
   it('renders CharactersList', () => {
     const wrapper = shallowMount(CharactersList, {
