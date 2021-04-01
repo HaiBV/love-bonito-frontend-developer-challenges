@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import Locations from '@/components/location/Locations.vue'
 import InfiniteLoading from 'vue-infinite-loading'
-
+jest.mock('idb')
 describe('Locations.vue', () => {
   it('renders Locations', () => {
     const wrapper = shallowMount(Locations, {

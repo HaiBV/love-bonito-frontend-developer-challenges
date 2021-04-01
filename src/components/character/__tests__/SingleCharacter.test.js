@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import SingleCharacter from '@/components/character/SingleCharacter.vue'
-
+jest.mock('idb')
 describe('EpisodesList.vue', () => {
   it('renders EpisodesList', () => {
     const wrapper = shallowMount(SingleCharacter, {

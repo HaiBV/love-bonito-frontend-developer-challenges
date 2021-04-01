@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import SingleLocation from '@/components/location/SingleLocation.vue'
-
+jest.mock('idb')
 describe('SingleLocation.vue', () => {
   it('renders SingleLocation', () => {
     const wrapper = shallowMount(SingleLocation, {

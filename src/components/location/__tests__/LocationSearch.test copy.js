@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import initSetup from '@/initSetup'
 import LocationSearch from '@/components/location/LocationSearch.vue'
-
+jest.mock('idb')
 describe('LocationSearch.vue', () => {
   it('renders LocationSearch', () => {
     const wrapper = shallowMount(LocationSearch, {
