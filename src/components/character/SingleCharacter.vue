@@ -1,7 +1,7 @@
 <template>
   <router-link :to="`/characters/${character.id}`">
     <b-card no-body style="max-width: 20rem">
-      <b-card-img :src="character.image" :alt="character.name" top></b-card-img>
+      <b-img-lazy :src="character.image" :alt="character.name" blank-src="/img/placeholder.jpg" ></b-img-lazy>
       <b-card-body>
         <b-card-title>{{ character.name }}</b-card-title>
         <b-card-sub-title class="mb-2">{{

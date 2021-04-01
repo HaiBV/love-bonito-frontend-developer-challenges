@@ -14,6 +14,9 @@ import Locations from '@/components/location/Locations.vue'
 
 export default {
   name: 'Location',
+  metaInfo: {
+    title: 'Locations list'
+  },
   components: {
     Locations
   }
